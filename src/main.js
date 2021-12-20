@@ -1,8 +1,37 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from './router/router'
+import InfiniteLoading from 'vue-infinite-loading';
+import store from './store'
+import axios from 'axios'
+
+
+import { setHeaderToken } from '../utils/auth'
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+import './assets/css/style.css'
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api/v1/'
 
 Vue.config.productionTip = false
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+Vue.use(InfiniteLoading);
+
+const token = localStorage.getItem('token');
+
+if (token) { 
+  setHeaderToken(token) 
+} 
+
+store.dispatch('get_user', token)
+.then(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app')
+}).catch((error) => {
+  console.error(error);
+})
