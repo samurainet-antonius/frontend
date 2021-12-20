@@ -3,7 +3,7 @@
         <div class="job-box d-md-flex align-items-center justify-content-between mb-30" v-for="(member,index) in members" :key="index">
                                 <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
                                     <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
-                                        AA
+                                        <img :src="'http://127.0.0.1:8000/avatar/'+member.avatar" width="50" height="50">
                                     </div>
                                     <div class="job-content">
                                         <h5 class="text-center text-md-left">{{ member.nama }}</h5>
@@ -27,7 +27,7 @@
                                 </div>
                         </div>
                         <div class="mb-5">
-                            <infinite-loading @distance="0.5" @infinite="getMembers">
+                            <infinite-loading @infinite="getMembers">
                                 <div slot="no-more">No more ...</div>
                                 <div slot="no-results">No results ..</div>
                             </infinite-loading>
@@ -54,11 +54,11 @@ export default {
       })
     },
     methods:{
-        async getMembers($state){
+        getMembers($state){
             try{
-               await axios.get(`members?offset=${this.page}`)
+               axios.get(`members?offset=${this.page}`)
                     .then(response =>{
-                        let data = response.data.data.data
+                        let data = response.data.data
                         if (data.length) {
 
                             this.page + 1;

@@ -11,9 +11,6 @@
             </li>
         <template v-if="isLoggedIn">
           <li class="nav-item">
-            <router-link class="nav-link" to="/profile">{{user.name}}</router-link>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" @click="logout" style="cursor:pointer;">Logout</a>
           </li>
         </template>
